@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'by036*&)uh*shy+vkdzi&t!am_qto^+4vqk0oe_ogfr29zb!x+'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debu turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'grievance_form.apps.GrievanceFormConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
