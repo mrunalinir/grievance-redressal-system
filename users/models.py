@@ -65,3 +65,7 @@ class User(PermissionsMixin, AbstractBaseUser):
 
     def __str__(self):
         return self.username
+
+    class Meta:
+        permissions = (("can view dashboard","To open dashboard"),
+                        ("can view manager level","To open manager dashboard"))

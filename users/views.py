@@ -2,7 +2,25 @@ from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils import six
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponse
 # Create your views here.
+
+def group_required(group, login_url=None, raise_exception=False):
+    def check_perms(user):
+        if isinstance(group, six.string_types):
+            groups =(group, )
+        else:
+            groups = group
+        if user.groups.filter(name__in=groups).exists():
+            return True
+        if raise_exception:
+            raise PermissionDenied
+        return False
+    return user_passes_test(check_perms, login_url=login_url)
+
 def index(request):
     return render(request, 'index.html')
 
@@ -21,3 +39,8 @@ def register(request):
         return redirect('login')
     else:
         return render(request, 'register.html', {"form" : form })
+
+@login_required
+@group_required('manager')
+def manager(request):
+    return render(request, 'manager.html')

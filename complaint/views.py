@@ -1,13 +1,27 @@
 from django.shortcuts import render,redirect
-from django.utils import timezone
+from django.utils import timezone, six
 from django.http import HttpResponse
 from .models import Complaint
 from .forms import ComplaintForm
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
+def group_required(group, login_url=None, raise_exception=False):
+    def check_perms(user):
+        if isinstance(group, six.string_types):
+            groups =(group, )
+        else:
+            groups = group
+        if user.groups.filter(name__in=groups).exists():
+            return True
+        if raise_exception:
+            raise PermissionDenied
+        return False
+    return user_passes_test(check_perms, login_url=login_url)
+
 @login_required
 def home(request):
 
@@ -28,10 +42,11 @@ def home(request):
 
 
 @login_required
+@group_required('staff')
 def dashboard(request):
     context = {
         'complaints' : Complaint.objects.all()
-    }
+        }
     return render(request, 'complaint-dashboard.html', context)
 
 @login_required
