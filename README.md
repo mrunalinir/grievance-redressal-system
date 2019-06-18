@@ -28,4 +28,12 @@ All other users have password: testing123
 
   This webiste also comes with registration and forgot password functionality.
   Citizens are intimated by e-mail when a complaint is resolved.
-  
+
+
+
+MANAGER AND STAFF LEVELS INSTRUCTIONS:
+  The groups and the permissions have been hard coded. But we have to provide the permissions to the groups from the admin page. This is just a one time process.
+  Currently user1 has staff access
+  User2 has manager access
+  user3 has citizen access
+  password for all the three users is testing123
