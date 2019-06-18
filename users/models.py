@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 class User_manager(BaseUserManager):
     def create_user(self, username, first_name, last_name, email, phone, housenumber, locality, village, mandal, district, pincode, password):
@@ -65,3 +67,9 @@ class User(PermissionsMixin, AbstractBaseUser):
 
     def __str__(self):
         return self.username
+    class Meta:
+        permissions = (("can view dashboard","To open dashboard"),
+            ("can view manager level","To open manager dashboard"))
+
+p, created = Group.objects.get_or_create(name='staff')
+p, created = Group.objects.get_or_create(name='manager')

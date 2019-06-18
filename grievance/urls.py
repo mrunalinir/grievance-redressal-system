@@ -18,5 +18,6 @@ urlpatterns = [
     path('dashboard/', compviews.dashboard, name='complaint-dashboard'),
     path('mycomplaints/', compviews.mycomplaints, name='complaint-view'),
     path('done/', compviews.done, name='complaint-registered'),
+    path('manager/',userviews.manager,name='manager'),
 
 ]
