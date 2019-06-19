@@ -32,7 +32,7 @@ def group_required(group, login_url=None, raise_exception=False):
 def home(request):
 
     if request.method == "POST":
-        form = ComplaintForm(request.POST)
+        form = ComplaintForm(request.POST, request.FILES)
         if form.is_valid():
 
             context = Complaint()
@@ -41,7 +41,8 @@ def home(request):
             context.channel = form.cleaned_data['channel']
             context.stream = form.cleaned_data['stream']
             context.dept = form.cleaned_data['dept']
-            #context.file = request.FILES['file']
+            context.image = form.cleaned_data['image']
+            context.file = form.cleaned_data['file']
             context.save()
             return render(request, 'complaint-registered.html', {'form':context})
 
@@ -130,11 +131,13 @@ def manager(request):
 def redressal(request, cmp_id):
     comp = get_object_or_404(Complaint,pk=cmp_id)
     if request.method == "POST":
-        form =complaintredressal(request.POST)
+        form =complaintredressal(request.POST, request.FILES)
         if form.is_valid():
             comp.status = form.cleaned_data['status']
             comp.resolution = form.cleaned_data['resolution']
             comp.resolved_by = request.user.username
+            comp.image = form.cleaned_data['image']
+            comp.file = form.cleaned_data['file']
             comp.save()
             return redirect('/dashboard')
 

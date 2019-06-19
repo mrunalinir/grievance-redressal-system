@@ -11,10 +11,15 @@
 
   <body>
         <h3>Token: {{comp.token}}</h3>
+        <p>Channel: {{ comp.channel }}</p>
         <p>Department: {{comp.dept}}</p>
+        <p>Stream: {{ comp.stream }}</p>
         <p>Status: {{comp.status}}</p>
         <p> By {{ comp.author.username }} at {{ comp.date }}</p>
         <p>Grievance: {{ comp.complaint }} </p>
+        <a href= "../media/{{ comp.image }}">Attatched Image</a>
+        <p>OR<p>
+        <a href= "../media/{{ comp.file }}">Attatched File</a>
     <form method='post'>
         {% csrf_token %}
         {{ form.as_p }}

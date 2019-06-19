@@ -40,3 +40,6 @@ Current Users:
   Go in the admin. Select 'can open dashboard' permission for staff and select users.
   select ' can open manager dashboard' permission for managers and select users.
   password for all the three users is testing123
+
+
+  Image field link in redressal file is hard coded..

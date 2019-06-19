@@ -12,6 +12,7 @@
     <hr>
     {% for complaint in complaints %}
       <h3>Token: {{complaint.token}}</h3>
+      <p>Department: {{ complaint.dept }}</p>
       <p>Grievance: {{ complaint.complaint }} </p>
       <p> By {{ complaint.author.username }} at {{ complaint.date }}</p>
       <p>Status: {{ complaint.status }}</p>

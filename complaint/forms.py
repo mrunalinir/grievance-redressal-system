@@ -39,7 +39,8 @@ class ComplaintForm(forms.Form):
     dept = forms.CharField(label='Department', widget=forms.Select(choices=dept_choice))
     stream = forms.CharField(label='Stream', widget=forms.Select(choices=stream_choice))
     complaint = forms.CharField(max_length=1000, required=True)
-    #file = forms.FileField()
+    image = forms.ImageField(required=False)
+    file = forms.FileField(required = False)
 #    image = forms.ImageField(upload_to='media/', null=True, blank=True)
 #	file = forms.ImageField(upload_to='images/', null=True, blank=True)
 

@@ -4,7 +4,8 @@ from django.urls import path, include
 from complaint import views as compviews
 from users import views as userviews
 from django.contrib.auth import views as auth_views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('complaint/', include('complaint.urls')),
@@ -32,4 +33,4 @@ urlpatterns = [
     # path('reset/done/', auth_views.password_reset_complete, name='password_reset_complete'),
     path('manager/',compviews.manager,name='manager'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
