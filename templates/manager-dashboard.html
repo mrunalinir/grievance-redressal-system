@@ -48,7 +48,7 @@
     </div>
 
     <div class="card">
-      <div class="number">
+      <div class="number" style="background: #ff9900;">
         <p><strong>
           {% if c1 %}
             {{c1}}
@@ -59,6 +59,21 @@
       </div>
       <div class="container">
         <h4><b>Pending</b></h4>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="number" style="background: #993300;">
+        <p><strong>
+          {% if c6 %}
+            {{c6}}
+          {% else %}
+            0
+          {% endif %}
+        </strong></p>
+      </div>
+      <div class="container">
+        <h4><b>Reassign</b></h4>
       </div>
     </div>
 
@@ -80,8 +95,8 @@
     <div class="card">
       <div class="number" style="background: #b30059; ">
         <p><strong>
-          {% if total %}
-            {{total}}
+          {% if c4 %}
+            {{c4}}
           {% else %}
             0
           {% endif %}
@@ -189,7 +204,41 @@
          <th> Resolve </th>
 
        </tr>
+       {% for complaint in complaints_assgn %}
+         {% if complaint.sle_date < dat %}
+         <tr style="color: red">
+           <td>{{complaint.token}}</td>
+           <td>{{ complaint.channel }} </td>
+           <td>{{ complaint.dept }} </td>
+           <td>{{ complaint.resolved_by}}</td>
+           <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
+           <td>{{complaint.status}}</td>
+           <td>{{complaint.sle_date}}</td>
+           <td>
+             <form action="/dashboard/{{complaint.pk}}">
+               <input class="resolvebutton" type="submit" value="resolve">
+             </form>
+           </td>
 
+         </tr>
+         {% else %}
+         <tr>
+           <td>{{complaint.token}}</td>
+           <td>{{ complaint.channel }} </td>
+           <td>{{ complaint.dept }} </td>
+           <td>{{ complaint.resolved_by}} at {{complaint.resolved_date}}</td>
+           <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
+           <td>{{complaint.status}}</td>
+           <td>{{complaint.sle_date}}</td>
+           <td>
+             <form action="/dashboard/{{complaint.pk}}">
+               <input class="resolvebutton"type="submit" value="resolve">
+             </form>
+           </td>
+         </tr>
+         {% endif %}
+
+      {% endfor %}
 
      {% for complaint in complaints_unre %}
        {% if complaint.sle_date < dat %}
@@ -228,6 +277,25 @@
      {% endfor %}
 
      {% for complaint in complaints_re %}
+       <tr>
+
+
+       <td>{{complaint.token}}</td>
+       <td>{{ complaint.channel }} </td>
+       <td>{{ complaint.dept }} </td>
+       <td>{{ complaint.resolved_by}} at {{complaint.resolved_date}}</td>
+       <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
+       <td>{{complaint.status}}</td>
+       <td>{{complaint.sle_date}}</td>
+       <td> <form action="/dashboard/details/{{complaint.pk}}">
+           <input class="resolvebutton"type="submit" value="Details">
+         </form> </td>
+
+       <tr>
+
+     {% endfor %}
+
+     {% for complaint in complaints_spam %}
        <tr>
 
 

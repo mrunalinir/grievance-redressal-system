@@ -158,8 +158,6 @@ def passwordchange(request):
 def mycomplaints(request):
     context = {
             'complaints' : Complaint.objects.filter(author= request.user)
-
-
     }
 
     return render(request, 'complaint-view.html', context)
@@ -190,19 +188,24 @@ def manager(request):
         name=0
     complaints_unre = Complaint.objects.filter(dept="department0",status = "unresolved")
     complaints_re = Complaint.objects.filter(dept="department0",status ="resolved")
+    complaints_assgn = Complaint.objects.filter(dept="department0", status="reassign")
+    complaints_spam = Complaint.objects.filter(dept="department0", status="spam")
 
     c1 = len(Complaint.objects.filter(status ="unresolved"))
     c2 = len(Complaint.objects.filter(status ="resolved"))
     c5 = len(Complaint.objects.filter(status ="spam"))
+    c6 = len(Complaint.objects.filter(status="reassign"))
+    total = len(Complaint.objects.all())
     x = Complaint.objects.filter(status ="unresolved")
+    y = Complaint.objects.filter(status="reassign")
 
     c3=0
-
     for i in x:
         if i.sle_date<dat:
             c3+=1
-
-    total = len(Complaint.objects.all())
+    for i in y:
+        if i.sle_date<dat:
+            c3+=1
     c4 = total -c3
 
     if dep and cha and not name:
@@ -210,42 +213,97 @@ def manager(request):
             complaints_unre = Complaint.objects.filter(dept=dep,channel=cha,status = "unresolved",date__range=[date1, date2])
             complaints_re = Complaint.objects.filter(dept=dep,channel=cha,status ="resolved",date__range=[date1, date2])
             complaints_spam = Complaint.objects.filter(dept=dep, channel=cha, status='spam', date__range=[date1,date2])
+            complaints_assgn = Complaint.objects.filter(dept=dep, channel=cha, status='reassign', date__range=[date1,date2])
         elif not (date1 and date2):
             complaints_unre = Complaint.objects.filter(dept=dep,channel=cha,status = "unresolved")
             complaints_re = Complaint.objects.filter(dept=dep,channel=cha,status ="resolved")
             complaints_spam = Complaint.objects.filter(dept=dep, channel=cha, status='spam')
-
+            complaints_assgn = Complaint.objects.filter(dept=dep, channel=cha, status='reassign')
         c1=len(complaints_unre)
         c2=len(complaints_re)
         c5=len(complaints_spam)
+        c6=len(complaints_assgn)
+        total = c1+c2+c5+c6
+        c3=0
+        for i in complaints_unre:
+            if i.sle_date<dat:
+                c3+=1
+        for i in complaints_assgn:
+            if i.sle_date<dat:
+                c3+=1
+        c4 = total - c3
 
     if dep == "All" and cha !="All" and not name:
         if date1 and date2:
             complaints_unre = Complaint.objects.filter(channel=cha,status = "unresolved",date__range=[date1, date2])
             complaints_re = Complaint.objects.filter(channel=cha,status ="resolved",date__range=[date1, date2])
+            complaints_spam = Complaint.objects.filter(channel=cha, status='spam', date__range=[date1,date2])
+            complaints_assgn = Complaint.objects.filter(channel=cha, status='reassign', date__range=[date1,date2])
         elif not (date1 and date2):
             complaints_unre = Complaint.objects.filter(channel=cha,status = "unresolved")
             complaints_re = Complaint.objects.filter(channel=cha,status ="resolved")
+            complaints_spam = Complaint.objects.filter(channel=cha, status='spam')
+            complaints_assgn = Complaint.objects.filter(channel=cha, status='reassign')
         c1=len(complaints_unre)
         c2=len(complaints_re)
+        c5=len(complaints_spam)
+        c6=len(complaints_assgn)
+        total = c1+c2+c5+c6
+        for i in complaints_unre:
+            if i.sle_date<dat:
+                c3+=1
+        for i in complaints_assgn:
+            if i.sle_date<dat:
+                c3+=1
+        c4 = total - c3
+
     if cha == "All"and dep != "All" and not name:
         if date1 and date2:
             complaints_unre = Complaint.objects.filter(dept=dep,status = "unresolved",date__range=[date1, date2])
             complaints_re = Complaint.objects.filter(dept=dep,status ="resolved",date__range=[date1, date2])
+            complaints_spam = Complaint.objects.filter(dept=dep, status='spam', date__range=[date1,date2])
+            complaints_assgn = Complaint.objects.filter(dept=dep, status='reassign', date__range=[date1,date2])
         elif not (date1 and date2):
             complaints_unre = Complaint.objects.filter(dept=dep,status = "unresolved")
             complaints_re = Complaint.objects.filter(dept=dep,status ="resolved")
+            complaints_spam = Complaint.objects.filter(dept=dep, status='spam')
+            complaints_assgn = Complaint.objects.filter(dept=dep, status='reassign')
         c1=len(complaints_unre)
         c2=len(complaints_re)
+        c5=len(complaints_spam)
+        c6=len(complaints_assgn)
+        total = c1+c2+c5+c6
+        for i in complaints_unre:
+            if i.sle_date<dat:
+                c3+=1
+        for i in complaints_assgn:
+            if i.sle_date<dat:
+                c3+=1
+        c4 = total - c3
+
     if dep == "All" and cha =="All" and not name:
         if date1 and date2:
             complaints_unre = Complaint.objects.filter(status = "unresolved",date__range=[date1, date2])
             complaints_re = Complaint.objects.filter(status ="resolved",date__range=[date1, date2])
+            complaints_spam = Complaint.objects.filter(status='spam', date__range=[date1,date2])
+            complaints_assgn = Complaint.objects.filter(status='reassign', date__range=[date1,date2])
         elif not (date1 and date2):
             complaints_unre = Complaint.objects.filter(status = "unresolved")
             complaints_re = Complaint.objects.filter(status ="resolved")
+            complaints_spam = Complaint.objects.filter(status='spam')
+            complaints_assgn = Complaint.objects.filter(status='reassign')
         c1=len(complaints_unre)
         c2=len(complaints_re)
+        c5=len(complaints_spam)
+        c6=len(complaints_assgn)
+        total = c1+c2+c5+c6
+        for i in complaints_unre:
+            if i.sle_date<dat:
+                c3+=1
+        for i in complaints_assgn:
+            if i.sle_date<dat:
+                c3+=1
+        c4 = total - c3
 
     ##################################################################################################
 
@@ -253,43 +311,101 @@ def manager(request):
         if date1 and date2:
             complaints_unre = Complaint.objects.filter(dept=dep,channel=cha,status = "unresolved",date__range=[date1, date2],resolved_by=name)
             complaints_re = Complaint.objects.filter(dept=dep,channel=cha,status ="resolved",date__range=[date1, date2],resolved_by=name)
+            complaints_spam = Complaint.objects.filter(dept=dep, channel=cha, status='spam', date__range=[date1,date2], resolved_by=name)
+            complaints_assgn = Complaint.objects.filter(dept=dep, channel=cha, status='reassign', date__range=[date1,date2], resolved_by=name)
         elif not (date1 and date2):
             complaints_unre = Complaint.objects.filter(dept=dep,channel=cha,status = "unresolved",resolved_by=name)
             complaints_re = Complaint.objects.filter(dept=dep,channel=cha,status ="resolved",resolved_by=name)
+            complaints_spam = Complaint.objects.filter(dept=dep, channel=cha, status='spam', resolved_by=name)
+            complaints_assgn = Complaint.objects.filter(dept=dep, channel=cha, status='reassign', resolved_by=name)
         c1=len(complaints_unre)
         c2=len(complaints_re)
+        c5=len(complaints_spam)
+        c6=len(complaints_assgn)
+        total = c1+c2+c5+c6
+        for i in complaints_unre:
+            if i.sle_date<dat:
+                c3+=1
+        for i in complaints_assgn:
+            if i.sle_date<dat:
+                c3+=1
+        c4 = total - c3
 
     if dep == "All" and cha !="All" and name :
         if date1 and date2:
             complaints_unre = Complaint.objects.filter(channel=cha,status = "unresolved",date__range=[date1, date2],resolved_by=name)
             complaints_re = Complaint.objects.filter(channel=cha,status ="resolved",date__range=[date1, date2],resolved_by=name)
+            complaints_spam = Complaint.objects.filter(channel=cha, status='spam', date__range=[date1,date2], resolved_by=name)
+            complaints_assgn = Complaint.objects.filter(channel=cha, status='reassign', date__range=[date1,date2], resolved_by=name)
         elif not (date1 and date2):
             complaints_unre = Complaint.objects.filter(channel=cha,status = "unresolved",resolved_by=name)
             complaints_re = Complaint.objects.filter(channel=cha,status ="resolved",resolved_by=name)
+            complaints_spam = Complaint.objects.filter(channel=cha, status='spam', resolved_by=name)
+            complaints_assgn = Complaint.objects.filter(channel=cha, status='reassign', resolved_by=name)
         c1=len(complaints_unre)
         c2=len(complaints_re)
+        c5=len(complaints_spam)
+        c6=len(complaints_assgn)
+        total = c1+c2+c5+c6
+        for i in complaints_unre:
+            if i.sle_date<dat:
+                c3+=1
+        for i in complaints_assgn:
+            if i.sle_date<dat:
+                c3+=1
+        c4 = total - c3
+
     if cha == "All"and dep != "All" and name:
         if date1 and date2:
             complaints_unre = Complaint.objects.filter(dept=dep,status = "unresolved",date__range=[date1, date2],resolved_by=name)
             complaints_re = Complaint.objects.filter(dept=dep,status ="resolved",date__range=[date1, date2],resolved_by=name)
+            complaints_spam = Complaint.objects.filter(dept=dep,  status='spam', date__range=[date1,date2], resolved_by=name)
+            complaints_assgn = Complaint.objects.filter(dept=dep, status='reassign', date__range=[date1,date2], resolved_by=name)
         elif not (date1 and date2):
             complaints_unre = Complaint.objects.filter(dept=dep,status = "unresolved",resolved_by=name)
             complaints_re = Complaint.objects.filter(dept=dep,status ="resolved",resolved_by=name)
+            complaints_spam = Complaint.objects.filter(dept=dep, status='spam', resolved_by=name)
+            complaints_assgn = Complaint.objects.filter(dept=dep, status='reassign',  resolved_by=name)
         c1=len(complaints_unre)
         c2=len(complaints_re)
+        c5=len(complaints_spam)
+        c6=len(complaints_assgn)
+        total = c1+c2+c5+c6
+        for i in complaints_unre:
+            if i.sle_date<dat:
+                c3+=1
+        for i in complaints_assgn:
+            if i.sle_date<dat:
+                c3+=1
+        c4 = total - c3
+
     if dep == "All" and cha =="All" and name:
         if date1 and date2:
             complaints_unre = Complaint.objects.filter(status = "unresolved",date__range=[date1, date2],resolved_by=name)
             complaints_re = Complaint.objects.filter(status ="resolved",date__range=[date1, date2],resolved_by=name)
+            complaints_spam = Complaint.objects.filter(status='spam', date__range=[date1,date2], resolved_by=name)
+            complaints_assgn = Complaint.objects.filter(status='reassign', date__range=[date1,date2], resolved_by=name)
         elif not (date1 and date2):
             complaints_unre = Complaint.objects.filter(status = "unresolved",resolved_by=name)
             complaints_re = Complaint.objects.filter(status ="resolved",resolved_by=name)
+            complaints_spam = Complaint.objects.filter(status='spam',resolved_by=name)
+            complaints_assgn = Complaint.objects.filter(status='reassign', resolved_by=name)
         c1=len(complaints_unre)
         c2=len(complaints_re)
+        c5=len(complaints_spam)
+        c6=len(complaints_assgn)
+        total = c1+c2+c5+c6
+        for i in complaints_unre:
+            if i.sle_date<dat:
+                c3+=1
+        for i in complaints_assgn:
+            if i.sle_date<dat:
+                c3+=1
+        c4 = total - c3
 
 
-    context = {'form':form,'complaints_unre' : complaints_unre,'complaints_re':complaints_re,
-                'dat':dat,'c1':c1,'c2':c2,'c3':c3,'c4':c4,'c5':c5,'query':query,'total':total}
+    context = {'form':form,'complaints_unre' : complaints_unre,'complaints_re':complaints_re,'complaints_spam':complaints_spam,'complaints_assgn':complaints_assgn,
+                'dat':dat,'c1':c1,'c2':c2,'c3':c3,'c4':c4,'c5':c5,'c6':c6,'query':query,'total':total}
     return render(request, 'manager-dashboard.html', context)
 
 
