@@ -3,3 +3,4 @@ The following frameworks are required to run the portal on your system:
 2. Django v2.0.2
 3. mysql v14.14
 4. mysql-server v5.7.26
+5. django-ipware
