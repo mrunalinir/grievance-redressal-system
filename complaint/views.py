@@ -12,6 +12,18 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.core.mail import send_mail
 from django.conf import settings
+from ipware import get_client_ip
+import requests
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[-1].strip()
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 
 
 #method to verify if a user is part of a group
@@ -44,6 +56,7 @@ def home(request):
             context.dept = form.cleaned_data['dept']
             context.image = form.cleaned_data['image']
             context.file = form.cleaned_data['file']
+            context.ip = get_client_ip(request)
             context.save()
             return redirect('done/')
     # Normally, ComplaintForm is saved as form and passed as context.
@@ -432,6 +445,13 @@ def redressal(request, cmp_id):
            # sendmail(request,mail)
 
             comp.save()
+            url=" http://esevaonline.telangana.gov.in/smssend/services/smssend?wsdl"
+            headers = {'content-type': 'application/soap+xml'}
+            #headers = {'content-type': 'text/xml'}
+            body = 'body.xml'
+
+            response = requests.post(url,data=body,headers=headers)
+            print (response.content)
 
             return redirect('/dashboard')
 
