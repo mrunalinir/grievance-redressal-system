@@ -216,6 +216,7 @@
            <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
            <td>{{complaint.status}}</td>
            <td>{{complaint.sle_date}}</td>
+           <td>{{ complaint.ip }}</td>
            <td>
              <form action="/dashboard/{{complaint.pk}}">
                <input class="resolvebutton" type="submit" value="resolve">
