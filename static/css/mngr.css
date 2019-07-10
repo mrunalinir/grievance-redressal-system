@@ -24,7 +24,7 @@
 }
 .palate{
   height: 160px;
-  width: 140%;
+  width: 100%;
   display: flex;
 }
 .number{
@@ -41,7 +41,7 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  width: 9.5%;
+  width: 13.25%;
   text-align: center;
   float: left;
   margin-left: 10px;
