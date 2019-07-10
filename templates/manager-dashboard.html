@@ -7,6 +7,20 @@
 {% block content %}
 
   <head>
+    <style>
+        .myButton {
+          background: #004a7d;
+          position: relative;
+          top: 20px;
+          color: white;
+          border-radius: 50px;
+          text-decoration: none;
+          font: 12px Verdana;
+          padding: 9px 15px 9px 15px;
+          margin-left: 20px;
+          font-size: 130%;
+        }
+    </style>
     <meta charset="utf-8">
     <title>Manager Dashboard</title>
    <link rel="stylesheet" href="{% static 'css/mngr.css' %}">
@@ -338,7 +352,7 @@
 
 <hr>
     <form action="{% url 'index' %}">
-        <input type="submit" value="HOME"><br/>
+         <input style="margin-top: 25px;" type="submit"  class="myButton" value="HOME"><br/>
     </form>
     <!-- <footer>
       <a>&copy; Powered by ESD </a>
