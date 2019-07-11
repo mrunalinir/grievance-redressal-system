@@ -130,7 +130,10 @@
 
     <form method='GET' action=''>
         {% csrf_token %}
-<table class="filtertab">
+        <br>
+        <br>
+<div class="tablecontainer">
+<table class="filtertableft">
 <div>
         <tr><td style="height:30px;background:white"><strong>Channel:</strong></td>
         <td style="height:30px;background:white"><select name = "c">
@@ -157,17 +160,7 @@
       </td>
     </tr>
 </div>
-<div>
-      <tr>
-      <td style="height:30px;background:white">  <strong>From:</strong> </td>
-      <td style="height:30px;background:white">  <input type="date" name="date1"></td>
-    </tr>
-</div>
-<div>
-      <tr><td style="height:30px;background:white">  <strong>To:</strong></td>
-        <td style="height:30px;background:white"><input type="date" name="date2"></td>
-      </tr>
-</div>
+
 <div>
       <tr>
         <td style="height:30px;background:white">  <strong>User:</strong></td>
@@ -182,6 +175,23 @@
     </tr>
 </div>
 </table>
+<table class="filtertabright" >
+<div>
+      <tr>
+      <td style="height:30px;background:white">  <strong>From:</strong> </td>
+      <td style="height:30px;background:white">  <input type="date" name="date1"></td>
+    </tr>
+</div>
+<div>
+      <tr><td style="height:30px;background:white">  <strong>To:</strong></td>
+        <td style="height:30px;background:white"><input type="date" name="date2"></td>
+      </tr>
+</div>
+</table>
+</div>
+
+
+
         <br>
         <input class='button' type="submit"  value="Filter" >
 
@@ -216,6 +226,7 @@
            <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
            <td>{{complaint.status}}</td>
            <td>{{complaint.sle_date}}</td>
+           <td>{{complaint.ip}}</td>
            <td>
              <form action="/dashboard/{{complaint.pk}}">
                <input class="resolvebutton" type="submit" value="resolve">
@@ -232,6 +243,7 @@
            <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
            <td>{{complaint.status}}</td>
            <td>{{complaint.sle_date}}</td>
+           <td>{{complaint.ip}}</td>
            <td>
              <form action="/dashboard/{{complaint.pk}}">
                <input class="resolvebutton"type="submit" value="resolve">
@@ -324,6 +336,7 @@
        <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
        <td>{{complaint.status}}</td>
        <td>{{complaint.sle_date}}</td>
+       <td> {{complaint.ip}} </td>
        <td> <form action="/dashboard/details/{{complaint.pk}}">
            <input class="resolvebutton"type="submit" value="Details">
          </form> </td>
@@ -337,8 +350,11 @@
 
 <hr>
     <form action="{% url 'index' %}">
-        <input type="submit" value="HOME"><br/>
+        <input type="submit" value="HOME" class="myButton">
+          <br/>
     </form>
+    <br>
+    <br>
     <!-- <footer>
       <a>&copy; Powered by ESD </a>
     </footer> -->

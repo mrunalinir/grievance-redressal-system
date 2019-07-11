@@ -9,7 +9,7 @@
     <style>
 table {
   table-layout: fixed;
-  width: 100%;
+  width: 99%;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
@@ -20,6 +20,12 @@ td {
   text-overflow:ellipsis;
   border:1px solid blue
   }
+th {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  border:1px solid blue
+  }
+
   tr:nth-child(even) {background-color: #79aec8}
   tr:nth-child(odd) {background-color:#417690 }
 
@@ -35,6 +41,7 @@ td {
     margin-left: 20px;
     font-size: 130%;
   }
+
 </style>
   </head>
   <body>
@@ -69,7 +76,7 @@ td {
           <td>{{complaint.sle_date}}</td>
           <td>
             <form action="/dashboard/{{complaint.pk}}">
-              <input type="submit" value="resolve">
+              <input type="submit" value="resolve" class="resolvebutton">
             </form>
           </td>
 
@@ -87,7 +94,7 @@ td {
           <td>{{complaint.sle_date}}</td>
           <td>
             <form action="/dashboard/{{complaint.pk}}">
-              <input type="submit" value="resolve">
+              <input type="submit" value="resolve" class="resolvebutton">
             </form>
           </td>
 
@@ -110,7 +117,7 @@ td {
           <td>{{complaint.sle_date}}</td>
           <td>
             <form action="/dashboard/{{complaint.pk}}">
-              <input type="submit" value="resolve">
+              <input type="submit" value="resolve" class="resolvebutton">
             </form>
           </td>
 
@@ -128,7 +135,7 @@ td {
           <td>{{complaint.sle_date}}</td>
           <td>
             <form action="/dashboard/{{complaint.pk}}">
-              <input type="submit" value="resolve">
+              <input type="submit" value="resolve" class="resolvebutton">
             </form>
           </td>
 
@@ -152,7 +159,7 @@ td {
         <td>{{complaint.sle_date}}</td>
         <td>
           <form action="/dashboard/details/{{complaint.pk}}">
-            <input type="submit" value="Details">
+            <input type="submit" value="Details" class="resolvebutton">
           </form>
         </td>
 
