@@ -448,12 +448,25 @@ def redressal(request, cmp_id):
             url=" http://esevaonline.telangana.gov.in/smssend/services/smssend?wsdl"
             headers = {'content-type': 'application/soap+xml'}
             #headers = {'content-type': 'text/xml'}
-            body = 'body.xml'
+            body = """<?xml version="1.0" encoding="UTF-8"?>
+         <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sms="http://sms.meeseva.com">
+   <soap:Header/>
+   <soap:Body>
+      <sms:sendMessage>
+         <!--Optional:-->
+         <sms:mobileNo>8919197571</sms:mobileNo>
+         <!--Optional:-->
+         <sms:strMessage>Your grievance has been resolved.</sms:strMessage>
+         <!--Optional:-->
+         <sms:strPass>meesevasms#$789</sms:strPass>
+      </sms:sendMessage>
+   </soap:Body>
+</soap:Envelope>"""
 
             response = requests.post(url,data=body,headers=headers)
-            print (response.content)
+            return HttpResponse (response.status_code)
 
-            return redirect('/dashboard')
+            #return redirect('/dashboard')
 
     form = complaintredressal()
 
