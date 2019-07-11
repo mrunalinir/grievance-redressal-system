@@ -20,26 +20,41 @@
     <form method='GET' action=''>
         {% csrf_token %}
         <!--{{ form.as_p }}-->
-        <strong>Channel</strong>
-        <select name = "c">
-          <option >All</option>
-          <option >MeeSeva</option>
-          <option >T-App Folio</option>
-          <option >T-Wallet</option>
-        </select>
+        <br>
+        <div class="tablecontainer" >
+        <table class="filtertableft">
+          <td style="background:white; border:none;">
+          <strong>Channel :</strong>
+          </td>
+        <td style="background:white; border:none;">
+          <select name = "c">
+            <option >All</option>
+            <option >MeeSeva</option>
+            <option >T-App Folio</option>
+            <option >T-Wallet</option>
+          </select>
+        </td>
+      </table>
+      <table class="filtertabright">
+        <td style="background:white; border:none;">
+          <strong>Department :</strong>
+        </td>
+        <td style="background:white; border:none;">
+          <select name = "d">
+            <option >All</option>
+            <option >Revenue</option>
+            <option >Food And Civil Supplies</option>
+            <option >GHMC</option>
+            <option >Commercial Taxes</option>
+            <option >SPDCL</option>
+            <option >NPDCL</option>
+            <option >Others</option>
+          </select>
+        </td>
+      </table>
+    </div>
 
-        <strong>Department</strong>
-        <select name = "d">
-          <option >All</option>
-          <option >Revenue</option>
-          <option >Food And Civil Supplies</option>
-          <option >GHMC</option>
-          <option >Commercial Taxes</option>
-          <option >SPDCL</option>
-          <option >NPDCL</option>
-          <option >Others</option>
-        </select>
-        <input class='button' type="submit"  value="Filter" >
+        <input  class='resolvebutton' type="submit"  value="Filter" >
 
     </form>
 
@@ -78,7 +93,7 @@
         <td>{{complaint.sle_date}}</td>
         <td>
           <form action="/dashboard/{{complaint.pk}}">
-            <input type="submit" value="resolve">
+            <input type="submit" value="resolve" class="resolvebutton">
           </form>
         </td>
         <td>
@@ -98,7 +113,7 @@
                   <option >{{complaint.id}}</option>
                 </select>
               </p>
-                <input type="submit" value="assign">
+                <input type="submit" value="assign" class="resolvebutton">
                 <br>
           </form>
       </td>
@@ -177,7 +192,7 @@
         <td>{{complaint.sle_date}}</td>
         <td>
           <form action="/dashboard/{{complaint.pk}}">
-            <input type="submit" value="resolve">
+            <input type="submit" value="resolve" class="resolvebutton">
           </form>
         </td>
         <td>
@@ -197,7 +212,7 @@
                   <option >{{complaint.id}}</option>
                 </select>
               </p>
-                <input type="submit" value="assign">
+                <input type="submit" value="assign" class="resolvebutton">
                 <br>
           </form>
       </td>
@@ -214,7 +229,7 @@
         <td>{{complaint.sle_date}}</td>
         <td>
           <form action="/dashboard/{{complaint.pk}}">
-            <input type="submit" value="resolve">
+            <input type="submit" value="resolve" class="resolvebutton">
           </form>
         </td>
         <td>
@@ -236,7 +251,7 @@
                   </select>
                 </p>
 
-                  <input type="submit" value="assign">
+                  <input type="submit" value="assign" class="resolvebutton">
 
             </form>
         </td>
@@ -249,13 +264,13 @@
   <h1>Resolved Complaints</h1>
   <table>
     <tr>
-      <th>TOKEN</th>
-      <th>CHANNEL</th>
-      <th>DEPARTMENT</th>
-      <th>RESOLVED BY</th>
-      <th>REGISTRATION DETAILS</th>
-      <th>RESOLVED DATE</th>
-      <th>DETAILS</th>
+      <th>Token</th>
+      <th>Channel</th>
+      <th>Department</th>
+      <th>Resolved By</th>
+      <th>Registration Details</th>
+      <th>Resolved Date</th>
+      <th>Details</th>
     </tr>
     {% for complaint in complaints_re %}
       <tr>
@@ -271,7 +286,7 @@
 
       <td>
         <form action="/dashboard/details/{{complaint.pk}}">
-          <input type="submit" value="Details">
+          <input type="submit" value="Details" class="resolvebutton">
         </form>
       </td>
 

@@ -7,6 +7,20 @@
 {% block content %}
 
   <head>
+    <style>
+        .myButton {
+          background: #004a7d;
+          position: relative;
+          top: 20px;
+          color: white;
+          border-radius: 50px;
+          text-decoration: none;
+          font: 12px Verdana;
+          padding: 9px 15px 9px 15px;
+          margin-left: 20px;
+          font-size: 130%;
+        }
+    </style>
     <meta charset="utf-8">
     <title>Manager Dashboard</title>
    <link rel="stylesheet" href="{% static 'css/mngr.css' %}">
@@ -130,7 +144,10 @@
 
     <form method='GET' action=''>
         {% csrf_token %}
-<table class="filtertab">
+        <br>
+        <br>
+<div class="tablecontainer">
+<table class="filtertableft">
 <div>
         <tr><td style="height:30px;background:white"><strong>Channel:</strong></td>
         <td style="height:30px;background:white"><select name = "c">
@@ -157,17 +174,7 @@
       </td>
     </tr>
 </div>
-<div>
-      <tr>
-      <td style="height:30px;background:white">  <strong>From:</strong> </td>
-      <td style="height:30px;background:white">  <input type="date" name="date1"></td>
-    </tr>
-</div>
-<div>
-      <tr><td style="height:30px;background:white">  <strong>To:</strong></td>
-        <td style="height:30px;background:white"><input type="date" name="date2"></td>
-      </tr>
-</div>
+
 <div>
       <tr>
         <td style="height:30px;background:white">  <strong>User:</strong></td>
@@ -182,6 +189,23 @@
     </tr>
 </div>
 </table>
+<table class="filtertabright" >
+<div>
+      <tr>
+      <td style="height:30px;background:white">  <strong>From:</strong> </td>
+      <td style="height:30px;background:white">  <input type="date" name="date1"></td>
+    </tr>
+</div>
+<div>
+      <tr><td style="height:30px;background:white">  <strong>To:</strong></td>
+        <td style="height:30px;background:white"><input type="date" name="date2"></td>
+      </tr>
+</div>
+</table>
+</div>
+
+
+
         <br>
         <input class='button' type="submit"  value="Filter" >
 
@@ -192,6 +216,62 @@
 
 
     <hr>
+
+    <h1>Complaints to be reassigned</h1>
+    <table>
+      <tr>
+        <th> Token</th>
+        <th> Channel </th>
+        <th> Department </th>
+        <th> Resolved By</th>
+        <th> Registration details</th>
+        <th> Status</th>
+        <th> SLA Date </th>
+        <th>IP</th>
+        <th> Resolve </th>
+
+      </tr>
+
+      {% for complaint in complaints_assgn %}
+        {% if complaint.sle_date < dat %}
+        <tr style="color: red">
+          <td>{{complaint.token}}</td>
+          <td>{{ complaint.channel }} </td>
+          <td>{{ complaint.dept }} </td>
+          <td>{{ complaint.resolved_by}}</td>
+          <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
+          <td>{{complaint.status}}</td>
+          <td>{{complaint.sle_date}}</td>
+          <td>{{complaint.ip}}</td>
+          <td>
+            <form action="/dashboard/{{complaint.pk}}">
+              <input class="resolvebutton" type="submit" value="resolve">
+            </form>
+          </td>
+
+        </tr>
+        {% else %}
+        <tr>
+          <td>{{complaint.token}}</td>
+          <td>{{ complaint.channel }} </td>
+          <td>{{ complaint.dept }} </td>
+          <td>{{ complaint.resolved_by}} at {{complaint.resolved_date}}</td>
+          <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
+          <td>{{complaint.status}}</td>
+          <td>{{complaint.sle_date}}</td>
+          <td>{{complaint.ip}}</td>
+          <td>
+            <form action="/dashboard/{{complaint.pk}}">
+              <input class="resolvebutton"type="submit" value="resolve">
+            </form>
+          </td>
+        </tr>
+        {% endif %}
+
+     {% endfor %}
+
+    </table>
+
     <h1>Unresolved Complaints</h1>
     <table>
        <tr>
@@ -206,41 +286,6 @@
          <th> Resolve </th>
 
        </tr>
-       {% for complaint in complaints_assgn %}
-         {% if complaint.sle_date < dat %}
-         <tr style="color: red">
-           <td>{{complaint.token}}</td>
-           <td>{{ complaint.channel }} </td>
-           <td>{{ complaint.dept }} </td>
-           <td>{{ complaint.resolved_by}}</td>
-           <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
-           <td>{{complaint.status}}</td>
-           <td>{{complaint.sle_date}}</td>
-           <td>
-             <form action="/dashboard/{{complaint.pk}}">
-               <input class="resolvebutton" type="submit" value="resolve">
-             </form>
-           </td>
-
-         </tr>
-         {% else %}
-         <tr>
-           <td>{{complaint.token}}</td>
-           <td>{{ complaint.channel }} </td>
-           <td>{{ complaint.dept }} </td>
-           <td>{{ complaint.resolved_by}} at {{complaint.resolved_date}}</td>
-           <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
-           <td>{{complaint.status}}</td>
-           <td>{{complaint.sle_date}}</td>
-           <td>
-             <form action="/dashboard/{{complaint.pk}}">
-               <input class="resolvebutton"type="submit" value="resolve">
-             </form>
-           </td>
-         </tr>
-         {% endif %}
-
-      {% endfor %}
 
      {% for complaint in complaints_unre %}
        {% if complaint.sle_date < dat %}
@@ -281,6 +326,37 @@
      {% endfor %}
      </table>
 
+     <h1>Spam Complaints</h1>
+     <table>
+       <tr>
+         <th> Token</th>
+         <th> Channel </th>
+         <th> Department </th>
+         <th> Resolved By</th>
+         <th> Registration details</th>
+         <th> Status</th>
+         <th> Resolved Date </th>
+         <th>IP</th>
+         <th> Details</th>
+       </tr>
+       {% for complaint in complaints_spam %}
+         <tr>
+         <td>{{complaint.token}}</td>
+         <td>{{ complaint.channel }} </td>
+         <td>{{ complaint.dept }} </td>
+         <td>{{ complaint.resolved_by}} at {{complaint.resolved_date}}</td>
+         <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
+         <td>{{complaint.status}}</td>
+         <td>{{complaint.sle_date}}</td>
+         <td> {{complaint.ip}} </td>
+         <td> <form action="/dashboard/details/{{complaint.pk}}">
+             <input class="resolvebutton"type="submit" value="Details">
+           </form> </td>
+         <tr>
+       {% endfor %}
+
+     </table>
+
     <h1>Resolved Complaints</h1>
       <table>
       <tr>
@@ -292,7 +368,7 @@
         <th> Status</th>
         <th> Resolved Date </th>
         <th>IP</th>
-        <th> Resolve Date</th>
+        <th> Details </th>
       </tr>
      {% for complaint in complaints_re %}
        <tr>
@@ -313,32 +389,19 @@
 
      {% endfor %}
 
-     {% for complaint in complaints_spam %}
-       <tr>
+
+     </table>
 
 
-       <td>{{complaint.token}}</td>
-       <td>{{ complaint.channel }} </td>
-       <td>{{ complaint.dept }} </td>
-       <td>{{ complaint.resolved_by}} at {{complaint.resolved_date}}</td>
-       <td> By {{ complaint.author.username }} at {{ complaint.date }}</td>
-       <td>{{complaint.status}}</td>
-       <td>{{complaint.sle_date}}</td>
-       <td> <form action="/dashboard/details/{{complaint.pk}}">
-           <input class="resolvebutton"type="submit" value="Details">
-         </form> </td>
-
-       <tr>
-
-     {% endfor %}
 
 
-   </table>
 
 <hr>
     <form action="{% url 'index' %}">
-        <input type="submit" value="HOME"><br/>
+         <input style="margin-top: 25px;" type="submit"  class="myButton" value="HOME"><br/>
     </form>
+    <br>
+    <br>
     <!-- <footer>
       <a>&copy; Powered by ESD </a>
     </footer> -->

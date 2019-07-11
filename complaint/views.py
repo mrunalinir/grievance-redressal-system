@@ -434,24 +434,42 @@ def redressal(request, cmp_id):
             comp.resolution = form.cleaned_data['resolution']
             comp.resolved_by = request.user.username
             mail=comp.author.email
-            send_mail(
-            'Grievance',
-            'Your Grievance is resolved!',
-            'esdgrievance@gmail.com',
-            [mail],
-            fail_silently=False,
-            )
-
-           # sendmail(request,mail)
-
+            number=comp.author.phone
+            status = comp.status
             comp.save()
-            url=" http://esevaonline.telangana.gov.in/smssend/services/smssend?wsdl"
-            headers = {'content-type': 'application/soap+xml'}
-            #headers = {'content-type': 'text/xml'}
-            body = 'body.xml'
 
-            response = requests.post(url,data=body,headers=headers)
-            print (response.content)
+            if status == "resolved":
+                send_mail(
+                    'Grievance',
+                    'Your Grievance is resolved!',
+                    'esdgrievance@gmail.com',
+                    [mail],
+                    fail_silently=False,
+                )
+
+               # sendmail(request,mail)
+
+
+                url="http://esevaonline.telangana.gov.in/smssend/services/smssend?wsdl"
+                headers = {'content-type': 'application/soap+xml'}
+                    #headers = {'content-type': 'text/xml'}
+                body = """<?xml version="1.0" encoding="UTF-8"?>
+                    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sms="http://sms.meeseva.com">
+                    <soap:Header/>
+                    <soap:Body>
+                    <sms:sendMessage>
+                    <!--Optional:-->
+                    <sms:mobileNo>"""+str(number)+"""</sms:mobileNo>
+                    <!--Optional:-->
+                    <sms:strMessage>Your complaint has been resolved. Kindly visit the portal to view more details.</sms:strMessage>
+                    <!--Optional:-->
+                    <sms:strPass>meesevasms#$789</sms:strPass>
+                    </sms:sendMessage>
+                    </soap:Body>
+                    </soap:Envelope>"""
+
+                response = requests.post(url,data=body,headers=headers)
+            #return HttpResponse (response.ok)
 
             return redirect('/dashboard')
 
@@ -464,8 +482,8 @@ def sendmail(request):
     mail='esdgrievance@gmail.com'
     m=mail
     send_mail(
-        'Grievance',
-        'Your Grievance is resolved!',
+        'Complaint registered on Grievance Redressal Portal',
+        'Your complaint has been resolved. Kindly visit the portal to view more details.',
         'esdgrievance@gmail.com',
         [m],
         fail_silently=False,

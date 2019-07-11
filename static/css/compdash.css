@@ -4,12 +4,29 @@ table {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 50px;
-  padding: 50px;
   text-align: center;
   cell-padding:10px;
 }
+/* table{
+  table-layout: fixed;
+  width: 99%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  cell-padding:10px;
+
+} */
 td {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  border:1px solid blue;
+
+  }
+  .tablecontainer{
+    overflow: hidden;
+    background: white;
+  }
+th {
   overflow:hidden;
   text-overflow:ellipsis;
   border:1px solid blue;
@@ -38,4 +55,22 @@ td {
       form{
         display: inline-block;
         font-size: 18px;
+      }
+
+      table.filtertableft{
+        background: white;
+        width:30%;
+        border:none;
+        float: left;
+        margin-left:30px;
+        text-align: left;
+
+      }
+      table.filtertabright{
+        background: white;
+        width:30%;
+        border:none;
+        margin-right:300px;
+        float: right;
+        text-align:left;
       }
