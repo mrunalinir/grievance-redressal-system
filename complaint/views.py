@@ -81,6 +81,7 @@ def staffdashboard(request):
 
 #Complaint dashboard to assign all complaints
 @login_required
+@group_required('supportstaff')
 def dashboard(request):
     form = dashboardform()
     dat = timezone.now()
@@ -471,7 +472,7 @@ def redressal(request, cmp_id):
                 response = requests.post(url,data=body,headers=headers)
             #return HttpResponse (response.ok)
 
-            return redirect('/dashboard')
+            return redirect('/staffdashboard')
 
     form = complaintredressal()
 

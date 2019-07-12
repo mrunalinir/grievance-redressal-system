@@ -24,11 +24,11 @@
         <p> <b>By</b> {{ comp.author.username }} <b>on</b> {{ comp.date }}</p>
 
         {% if comp.image %}
-          <a href ="../media/{{ comp.image }}" >Attached Image</a>
+          <a href ="../dashboard/media/{{ comp.image }}" >Attached Image</a>
         {% endif %}
 
         {% if comp.file %}
-          <a href= "../media/{{ comp.file }}">Attatched File</a>
+          <a href= "../dashboard/media/{{ comp.file }}">Attatched File</a>
         {% endif %}
         <hr>
         <h1>Resolve</h1>
