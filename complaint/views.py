@@ -450,6 +450,7 @@ def redressal(request, cmp_id):
 
                # sendmail(request,mail)
 
+               #SMS API
 
                 url="http://esevaonline.telangana.gov.in/smssend/services/smssend?wsdl"
                 headers = {'content-type': 'application/soap+xml'}
@@ -470,9 +471,9 @@ def redressal(request, cmp_id):
                     </soap:Envelope>"""
 
                 response = requests.post(url,data=body,headers=headers)
+                #Uncomment the below line to check whether the sms has been sent or not. If it shows True then the SMS has been sent.
             #return HttpResponse (response.ok)
-
-            return redirect('/staffdashboard')
+                return redirect('/')
 
     form = complaintredressal()
 
